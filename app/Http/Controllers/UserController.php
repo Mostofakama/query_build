@@ -18,15 +18,37 @@ class UserController extends Controller
         return view('oneuser',['data' => $user]);
     }
 
-    public function update(){
-        $update = DB::table('users')
-        ->where('id',1)
-        ->update([
-          'name' => 'kamal',
-          'email' => 'kamal@gmail.com',
-        ]);
-    }
 
+
+    public function update(int $id){
+
+        $user = DB::table('users')
+        ->where('id',$id)
+        ->get();
+        // $user = DB::table('users')->find($id);
+        // return $user;
+        return view('update',['data'=>$user]);
+        // $update = DB::table('users')
+        // ->where('id',1)
+        // ->update([
+        //   'name' => 'kamal',
+        //   'email' => 'kamal@gmail.com',
+        // ]);
+    }
+    
+     public function updatedata(Request $req,string $id){
+        // return $req;
+        $user = DB::table('users')
+        ->where('id',$id)
+        ->update([
+          'name' => $req->name,
+          'email' => $req->email,
+        ]);
+        if($user){
+            return redirect()->route('home');
+        }
+     }
+    
     public function delete(string $id){
         $delete = DB::table('users')
         ->where('id',$id)
@@ -38,12 +60,22 @@ class UserController extends Controller
         }
     }
 
-    public function insert(){
+    public function adduser(){
+        return view('singup');
+    }
+
+
+    public function insert(Request $req){
+        // return $req;
         $insert = DB::table('users')
         ->insert([
-            'name' => 'mostofa',
-            'email' => 'mostofa@gmail.com',
-            'password' => Hash::make('asdf1234'),
+            'name' => $req->name,
+            'email' => $req->email,
+            'password' => Hash::make($req->password),
+            'created_at' => now(),
         ]);
+        if($insert){
+            return redirect()->route('home');
+        }
     }
 }

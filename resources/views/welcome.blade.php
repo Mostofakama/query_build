@@ -8,7 +8,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
 <body>
+    
     <div class="container">
+        <div class="m-4">
+        <h1>all users</h1>
+        <a class="btn btn-sm btn-success" href="{{route('add.user')}}">Add new</a>
+        </div>
         <div class="tb">
             <table class="table table-striped">
                 <tr>
@@ -17,7 +22,7 @@
                     <th>email</th>
                     <th>password</th>
                     <th>view</th>
-                    {{-- <th>update</th> --}}
+                    <th>update</th>
                     <th>delete</th>
                   
                 </tr>
@@ -28,7 +33,7 @@
                     <td>{{$user->email}}</td>
                     <td>{{$user->password}}</td>
                     <td><a class="btn btn-primary btn-sm " href="{{route('one.users.detels',$user->id)}}">view</a></td>
-                    {{-- <td><a class="btn btn-sm btn-success " href="#">Update</a></td> --}}
+                    <td><a class="btn btn-sm btn-success " href="{{route('update',$user->id)}}">Update</a></td>
                     <td><a class="btn btn-sm btn-danger " href="{{route('delete.user',$user->id)}}">Delete</a></td>
                 </tr>
                 @endforeach
